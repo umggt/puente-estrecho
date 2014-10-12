@@ -6,13 +6,13 @@
 		$routeProvider
 
 		.when('/simulador', {
-			templateUrl: '/js/app/views/simulador.html',
+			templateUrl: 'app/views/simulador.html',
 			controller: 'SimuladorCtrl',
 			controllerAs: 'vm'
 		})
 
 		.when('/documentacion', {
-			templateUrl: 'js/app/views/documentacion.html'
+			templateUrl: 'app/views/documentacion.html'
 		})
 
 		.otherwise({ redirectTo: '/simulador' })
