@@ -1,5 +1,5 @@
 (function () {
 
-	angular.module('app', ['ngRoute', 'ngAnimate']);
-	
+    angular.module('app', ['ngRoute', 'ngAnimate']);
+
 })();

@@ -1,21 +1,21 @@
 (function () {
-	
-	angular.module('app').config(configRoutes);
 
-	function configRoutes($routeProvider) {
-		$routeProvider
+    angular.module('app').config(configRoutes);
 
-		.when('/simulador', {
-			templateUrl: 'app/views/simulador.html',
-			controller: 'SimuladorCtrl',
-			controllerAs: 'vm'
-		})
+    function configRoutes($routeProvider) {
+        $routeProvider
 
-		.when('/documentacion', {
-			templateUrl: 'app/views/documentacion.html'
-		})
+        .when('/simulador', {
+            templateUrl: 'app/views/simulador.html',
+            controller: 'SimuladorCtrl',
+            controllerAs: 'vm'
+        })
 
-		.otherwise({ redirectTo: '/simulador' })
-	}
+        .when('/documentacion', {
+            templateUrl: 'app/views/documentacion.html'
+        })
+
+        .otherwise({ redirectTo: '/simulador' })
+    }
 
 })();
