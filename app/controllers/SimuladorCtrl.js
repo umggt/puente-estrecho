@@ -65,9 +65,21 @@
         }
 
         function drawCarrosEnCola(cola){
-            for (var i = cola.length - 1; i >= 0; i--) {
-                var c = cola[i];
-                c.draw();
+            var i;
+            var carrosPorEliminar = [];
+            for (i = 0; i < cola.length; i++) {
+                var carro = cola[i];
+
+                if (carro.visible) {
+                    carro.draw();   
+                } else {
+                    carrosPorEliminar.push(i);
+                }
+            };
+
+            for (i = 0; i < carrosPorEliminar.length; i++) {
+                var index = carrosPorEliminar[i];
+                cola.splice(index, 1);
             };
         }
 

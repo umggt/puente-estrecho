@@ -3,7 +3,7 @@
     angular.module('app').factory('Carro', CarroFactory);
 
     function CarroFactory() {
-    	return Carro;
+        return Carro;
     }
 
     function Carro(puente, direccion, carroAlFrente) {
@@ -17,7 +17,14 @@
         var anchoCarril = 100;
         var centroDeSubida = (anchoCarril * 2) + (margenCarril - anchoInicial) + (anchoInicial / 2);
         var centroDeBajada = (anchoCarril * 1) + (margenCarril - anchoInicial) + (anchoInicial / 2);
+        var llegoAlBordeSuperior = false;
+        var salioDelBordeInferior = false;
+        var llegoAlBordeInferior = false;
+        var salioDelBordeSuperior = false;
 
+        self.visible = true;
+        self.esperando = false;
+        self.cruzando = false;
         self.deSubida = direccion === Carro.d.subida,
         self.height = anchoInicial;
         self.width = altoInicial;
@@ -27,35 +34,70 @@
         self.style = {};
 
         self.draw = draw;
+        self.esperar = esperar;
+        self.cruzar = cruzar;
 
         function draw() {
+
+            if (carroAlFrente && !carroAlFrente.visible) {
+                carroAlFrente = null;
+            }
+
             if (self.deSubida){
                 drawSubida();
             } else {
                 drawBajada();
             }
+
             updateStyle();
+
+        }
+
+        function esperar() {
+            self.esperando = true;
+        }
+
+        function cruzar() {
+            self.esperando = false;
+            self.cruzando = true;
         }
 
         // calcula las nuevas coordenadas para dibujar un carro de bajada.
         function drawBajada() {
 
-            if (carroAlFrente && (self.top + self.height + espacio) >= carroAlFrente.top) {
+            if (carroAlFrente && carroAlFrente.visible && (self.top + self.height + espacio) >= carroAlFrente.top) {
                 self.top = carroAlFrente.top - (self.height + espacio);
                 return;
             }
 
-            var maxTop = escenarioHeight - self.height;
-            if (self.top >= maxTop) {
-                // si el carro llega al final del escenario, finalizar.
+            if (self.top >= escenarioHeight) {
+                self.visible = false;
                 return;
             }
 
-            if (llegaBordeSuperior()) {
+            if (llegaBordeSuperior() && !self.esperando && !llegoAlBordeSuperior) {
                 // si el carro llega a la parte superior del puente,
                 // se mueve el carro al centro del puente.
                 //self.left = centroDeBajada + (anchoCarril / 2);
+                llegoAlBordeSuperior = true;
+                puente.solicitarPaso(self);
                 return;
+            }
+
+            if (self.esperando) {
+                return;
+            }
+
+            if (saleBordeInferior() && self.cruzando && !salioDelBordeInferior) {
+                self.cruzando = false;
+                salioDelBordeInferior = true;
+                puente.notificarSalida(self);
+            }
+
+            if (self.cruzando) {
+                centrarEnPuente();
+            } else {
+                centrarEnCarril();
             }
 
             self.top++;
@@ -64,21 +106,39 @@
         // calcula las nuevas coordenadas para dibujar un carro de subida.
         function drawSubida() {
 
-            if (carroAlFrente && (self.top - espacio) <= (carroAlFrente.top + carroAlFrente.height)) {
+            if (carroAlFrente && carroAlFrente.visible && (self.top - espacio) <= (carroAlFrente.top + carroAlFrente.height)) {
                 self.top = (carroAlFrente.top + carroAlFrente.height) + espacio;
                 return;
             }
 
-            if (self.top <= 0) {
-                // si el carro llega al final del escenario, finalizar.
+            if (self.top + self.height <= 0) {
+                self.visible = false;
                 return;
             }
 
-            if (llegaBordeInferior()) {
+            if (llegaBordeInferior() && !self.esperando && !llegoAlBordeInferior) {
                 // si el carro llega a la parte inferior del puente,
                 // se mueve el carro al centro del puente.
                 //self.left = centroDeSubida - (anchoCarril / 2);
+                llegoAlBordeInferior = true;
+                puente.solicitarPaso(self);
                 return;
+            }
+
+            if (self.esperando) {
+                return;
+            }
+
+            if (saleBordeSuperior() && !salioDelBordeSuperior) {
+                self.cruzando = false;
+                salioDelBordeSuperior = true;
+                puente.notificarSalida(self);
+            }
+
+            if (self.cruzando) {
+                centrarEnPuente();
+            } else {
+                centrarEnCarril();
             }
 
             self.top--;
@@ -93,6 +153,10 @@
             return self.top + self.height >= puente.top;
         }
 
+        function saleBordeInferior() {
+            return self.top >= puente.bottom;
+        }
+
         // Indica si el carro de subida ha llegado a la parte inferior del puente
         function  llegaBordeInferior() {
             // para saber si un carro (de subida) ha llegado a la parte inferior
@@ -100,6 +164,10 @@
             // "trompa" y se compara si estan en la misma corrdenada donde finaliza 
             // el puente.
             return self.top <= puente.bottom;
+        }
+
+        function saleBordeSuperior() {
+            return self.top + self.height <= puente.top;
         }
 
         // Obtiene la coordenada inicial en 'y' para el carro.
@@ -115,6 +183,14 @@
         // Obtiene la coordenada inicial en 'x' para el carro.
         function left() {
             return self.deSubida ? centroDeSubida : centroDeBajada;
+        }
+
+        function centrarEnPuente() {
+            self.left = self.deSubida ? centroDeSubida - 50 : centroDeBajada + 50;
+        }
+
+        function centrarEnCarril() {
+            self.left = left();
         }
 
         function updateStyle() {
