@@ -20,6 +20,14 @@ body {
     border: 1px solid red;
 }
 
+.controles {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    margin-top: 255px;
+    margin-left: -250px;
+}
+
 .carretera-superior, 
 .carretera-inferior {
     width: 100%;
@@ -53,6 +61,18 @@ body {
     margin-left: 200px;
     border-right: 2px solid white;
     border-left: 2px solid white;
+}
+
+.carro {
+    position: absolute;
+}
+
+.carro.subida {
+    background-color: blue;
+}
+
+.carro.bajada {
+    background-color: red;
 }
 
 @media all and (max-height: 620px) {

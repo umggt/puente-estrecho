@@ -10,4 +10,15 @@
         <div class="carril izquierdo"></div>
         <div class="carril derecho"></div>
     </div>
+    <div ng-repeat="carro in vm.colaBajada" ng-class="{ carro: true, subida: carro.deSubida, bajada: !carro.deSubida }" ng-style="carro.style"></div>
+    <div ng-repeat="carro in vm.colaSubida" ng-class="{ carro: true, subida: carro.deSubida, bajada: !carro.deSubida }" ng-style="carro.style"></div>
+    <div ng-repeat="carro in vm.colaBajando" ng-class="{ carro: true, subida: carro.deSubida, bajada: !carro.deSubida }" ng-style="carro.style"></div>
+    <div ng-repeat="carro in vm.colaSubiendo" ng-class="{ carro: true, subida: carro.deSubida, bajada: !carro.deSubida }" ng-style="carro.style"></div>
+</div>
+<div class="controles">
+    <div clas="btn-group">
+        <button class="btn btn-default" ng-click="vm.agregarCarroBajada()"><i class="glyphicon glyphicon-arrow-down"></i></button>
+        <button class="btn btn-default" ng-click="vm.agregarCarroSubida()"><i class="glyphicon glyphicon-arrow-up"></i></button>
+        <button class="btn btn-default" ng-click="vm.pause()">Pausa</button>
+    </div>
 </div>
