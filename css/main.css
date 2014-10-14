@@ -79,12 +79,22 @@ body {
     .escenario {
         top: 52px;
         margin-top: 0;
-    }    
+    }
+    
+    .controles {
+        top: 552px;
+        margin-top: 0;
+    }
 }
 
 @media all and (max-width: 510px) {
     .escenario {
         left: 2px;
         margin-left: 0;
-    }    
+    }
+
+    .controles {
+        left: 2px;
+        margin-left: 0;
+    }  
 }

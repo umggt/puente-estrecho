@@ -16,9 +16,9 @@
     <div ng-repeat="carro in vm.colaSubiendo" ng-class="{ carro: true, subida: carro.deSubida, bajada: !carro.deSubida }" ng-style="carro.style"></div>
 </div>
 <div class="controles">
-    <div clas="btn-group">
+    <div class="btn-group">
         <button class="btn btn-default" ng-click="vm.agregarCarroBajada()"><i class="glyphicon glyphicon-arrow-down"></i></button>
         <button class="btn btn-default" ng-click="vm.agregarCarroSubida()"><i class="glyphicon glyphicon-arrow-up"></i></button>
-        <button class="btn btn-default" ng-click="vm.pause()">Pausa</button>
+        <button class="btn btn-default" ng-click="vm.playPause()"><i class="glyphicon glyphicon-pause" ng-show="!!vm.intervalId"></i><i class="glyphicon glyphicon-play" ng-show="!vm.intervalId"></i></button>
     </div>
 </div>

@@ -17,7 +17,7 @@
         vm.agregarCarroBajada = agregarCarroBajada;
         vm.agregarCarroSubida = agregarCarroSubida;
 
-        vm.pause = pause;
+        vm.playPause = playPause;
 
         var puente = new Puente();
 
@@ -42,6 +42,16 @@
         function pause() {
             if (vm.intervalId) {
                 $interval.cancel(vm.intervalId);
+                vm.intervalId = null;
+            }
+        }
+
+        function playPause() {
+            if (!vm.intervalId) {
+                play();
+            }
+            else {
+                pause();
             }
         }
 
