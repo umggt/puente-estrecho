@@ -22,7 +22,8 @@
         var puente = new Puente();
 
         function agregarCarroBajada() {
-            var carro = new Carro(puente, Carro.d.bajada);
+            var ultimo = vm.colaBajada.length > 0 ? vm.colaBajada[vm.colaBajada.length - 1] : null; 
+            var carro = new Carro(puente, Carro.d.bajada, ultimo);
             vm.colaBajada.push(carro);
         }
 
@@ -88,9 +89,10 @@
         self.bottom = self.top + self.height;
     }
 
-    function Carro(puente, direccion) {
+    function Carro(puente, direccion, carroAlFrente) {
 
         var self = this;
+        var espacio = 3;
         var anchoInicial = 10;
         var altoInicial = 10;
         var escenarioHeight = 500;
@@ -121,15 +123,18 @@
         // calcula las nuevas coordenadas para dibujar un carro de bajada.
         function drawBajada (i) {
 
-            var top = topDeBajada(i);
-            var maxTop = escenarioHeight - self.height;
+            if (carroAlFrente && (self.top + self.height + espacio) >= carroAlFrente.top) {
+                self.top = carroAlFrente.top - (self.height + espacio);
+                return;
+            }
 
-            if (top >= maxTop) {
+            var maxTop = escenarioHeight - self.height;
+            if (self.top >= maxTop) {
                 // si el carro llega al final del escenario, finalizar.
                 return;
             }
 
-            if (llegaBordeSuperior(top)) {
+            if (llegaBordeSuperior()) {
                 // si el carro llega a la parte superior del puente,
                 // se mueve el carro al centro del puente.
                 self.left = centroDeBajada + (anchoCarril / 2);
@@ -165,7 +170,7 @@
             // del puente, se obtienen las coordenadas en donde se encuentra su
             // "trompa" y se compara si estan en la misma corrdenada donde inicia 
             // el puente.
-            return top >= puente.top;
+            return self.top + self.height >= puente.top;
         }
 
         // Indica si el carro de subida ha llegado a la parte inferior del puente
@@ -196,8 +201,8 @@
             return -1 * self.height * i + self.top;
         }
 
-        function topDeBajada (i) {
-            return self.height * i + self.top + self.height
+        function margenDeBajada (i) {
+            return self.height * i;
         }
 
         function updateStyle() {
