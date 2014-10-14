@@ -22,15 +22,17 @@
         var puente = new Puente();
 
         function agregarCarroBajada() {
-            var ultimo = vm.colaBajada.length > 0 ? vm.colaBajada[vm.colaBajada.length - 1] : null; 
-            var carro = new Carro(puente, Carro.d.bajada, ultimo);
-            vm.colaBajada.push(carro);
+            agregarACola(vm.colaBajada, Carro.d.bajada);
         }
 
         function agregarCarroSubida() {
-            var ultimo = vm.colaSubida.length > 0 ? vm.colaSubida[vm.colaSubida.length - 1] : null; 
-            var carro = new Carro(puente, Carro.d.subida, ultimo);
-            vm.colaSubida.push(carro);
+            agregarACola(vm.colaSubida, Carro.d.subida);
+        }
+
+        function agregarACola(cola, direccion) {
+            var ultimo = cola.length > 0 ? cola[cola.length - 1] : null; 
+            var carro = new Carro(puente, direccion, ultimo);
+            cola.push(carro);
         }
 
         function init() {
