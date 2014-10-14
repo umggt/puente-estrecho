@@ -28,7 +28,8 @@
         }
 
         function agregarCarroSubida() {
-            var carro = new Carro(puente, Carro.d.subida);
+            var ultimo = vm.colaSubida.length > 0 ? vm.colaSubida[vm.colaSubida.length - 1] : null; 
+            var carro = new Carro(puente, Carro.d.subida, ultimo);
             vm.colaSubida.push(carro);
         }
 
@@ -64,7 +65,7 @@
         function drawCarrosEnCola(cola){
             for (var i = cola.length - 1; i >= 0; i--) {
                 var c = cola[i];
-                c.draw(i);
+                c.draw();
             };
         }
 
@@ -111,17 +112,17 @@
 
         self.draw = draw;
 
-        function draw(i) {
+        function draw() {
             if (self.deSubida){
-                drawSubida(i);
+                drawSubida();
             } else {
-                drawBajada(i);
+                drawBajada();
             }
             updateStyle();
         }
 
         // calcula las nuevas coordenadas para dibujar un carro de bajada.
-        function drawBajada (i) {
+        function drawBajada() {
 
             if (carroAlFrente && (self.top + self.height + espacio) >= carroAlFrente.top) {
                 self.top = carroAlFrente.top - (self.height + espacio);
@@ -137,7 +138,7 @@
             if (llegaBordeSuperior()) {
                 // si el carro llega a la parte superior del puente,
                 // se mueve el carro al centro del puente.
-                self.left = centroDeBajada + (anchoCarril / 2);
+                //self.left = centroDeBajada + (anchoCarril / 2);
                 return;
             }
 
@@ -145,19 +146,22 @@
         }
 
         // calcula las nuevas coordenadas para dibujar un carro de subida.
-        function drawSubida (i) {
+        function drawSubida() {
 
-            var top = topDeSubida(i);
+            if (carroAlFrente && (self.top - espacio) <= (carroAlFrente.top + carroAlFrente.height)) {
+                self.top = (carroAlFrente.top + carroAlFrente.height) + espacio;
+                return;
+            }
 
-            if (top <= 0) {
+            if (self.top <= 0) {
                 // si el carro llega al final del escenario, finalizar.
                 return;
             }
 
-            if (llegaBordeInferior(top)) {
+            if (llegaBordeInferior()) {
                 // si el carro llega a la parte inferior del puente,
                 // se mueve el carro al centro del puente.
-                self.left = centroDeSubida - (anchoCarril / 2);
+                //self.left = centroDeSubida - (anchoCarril / 2);
                 return;
             }
 
@@ -165,7 +169,7 @@
         }
 
         // Indica si el carro de bajada ha llegado a la parte superior del puente
-        function llegaBordeSuperior(top) {
+        function llegaBordeSuperior() {
             // para saber si un carro (de bajada) ha llegado a la parte superior
             // del puente, se obtienen las coordenadas en donde se encuentra su
             // "trompa" y se compara si estan en la misma corrdenada donde inicia 
@@ -174,12 +178,12 @@
         }
 
         // Indica si el carro de subida ha llegado a la parte inferior del puente
-        function  llegaBordeInferior (top) {
+        function  llegaBordeInferior() {
             // para saber si un carro (de subida) ha llegado a la parte inferior
             // del puente, se obtienen las coordenadas en donde se encuentra su
             // "trompa" y se compara si estan en la misma corrdenada donde finaliza 
             // el puente.
-            return top <= puente.bottom;
+            return self.top <= puente.bottom;
         }
 
         // Obtiene la coordenada inicial en 'y' para el carro.
@@ -195,14 +199,6 @@
         // Obtiene la coordenada inicial en 'x' para el carro.
         function left() {
             return self.deSubida ? centroDeSubida : centroDeBajada;
-        }
-
-        function topDeSubida(i) {
-            return -1 * self.height * i + self.top;
-        }
-
-        function margenDeBajada (i) {
-            return self.height * i;
         }
 
         function updateStyle() {
