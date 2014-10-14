@@ -109,25 +109,27 @@
 
         self.draw = draw;
 
-        function draw(cola) {
+        function draw(i) {
             if (self.deSubida){
-                drawSubida(cola);
+                drawSubida(i);
             } else {
-                drawBajada(cola);
+                drawBajada(i);
             }
             updateStyle();
         }
 
         // calcula las nuevas coordenadas para dibujar un carro de bajada.
-        function drawBajada (cola) {
+        function drawBajada (i) {
 
+            var top = topDeBajada(i);
             var maxTop = escenarioHeight - self.height;
-            if (self.top >= maxTop) {
+
+            if (top >= maxTop) {
                 // si el carro llega al final del escenario, finalizar.
                 return;
             }
 
-            if (llegaBordeSuperior()) {
+            if (llegaBordeSuperior(top)) {
                 // si el carro llega a la parte superior del puente,
                 // se mueve el carro al centro del puente.
                 self.left = centroDeBajada + (anchoCarril / 2);
@@ -138,14 +140,16 @@
         }
 
         // calcula las nuevas coordenadas para dibujar un carro de subida.
-        function drawSubida (cola) {
+        function drawSubida (i) {
 
-            if (self.top <= 0) {
+            var top = topDeSubida(i);
+
+            if (top <= 0) {
                 // si el carro llega al final del escenario, finalizar.
                 return;
             }
 
-            if (llegaBordeInferior()) {
+            if (llegaBordeInferior(top)) {
                 // si el carro llega a la parte inferior del puente,
                 // se mueve el carro al centro del puente.
                 self.left = centroDeSubida - (anchoCarril / 2);
@@ -156,23 +160,21 @@
         }
 
         // Indica si el carro de bajada ha llegado a la parte superior del puente
-        function llegaBordeSuperior() {
+        function llegaBordeSuperior(top) {
             // para saber si un carro (de bajada) ha llegado a la parte superior
             // del puente, se obtienen las coordenadas en donde se encuentra su
             // "trompa" y se compara si estan en la misma corrdenada donde inicia 
             // el puente.
-            var trompa = self.top + self.height;
-            return trompa >= puente.top;
+            return top >= puente.top;
         }
 
         // Indica si el carro de subida ha llegado a la parte inferior del puente
-        function  llegaBordeInferior () {
+        function  llegaBordeInferior (top) {
             // para saber si un carro (de subida) ha llegado a la parte inferior
             // del puente, se obtienen las coordenadas en donde se encuentra su
             // "trompa" y se compara si estan en la misma corrdenada donde finaliza 
             // el puente.
-            var trompa = self.top;
-            return trompa <= puente.bottom;
+            return top <= puente.bottom;
         }
 
         // Obtiene la coordenada inicial en 'y' para el carro.
@@ -188,6 +190,14 @@
         // Obtiene la coordenada inicial en 'x' para el carro.
         function left() {
             return self.deSubida ? centroDeSubida : centroDeBajada;
+        }
+
+        function topDeSubida(i) {
+            return -1 * self.height * i + self.top;
+        }
+
+        function topDeBajada (i) {
+            return self.height * i + self.top + self.height
         }
 
         function updateStyle() {
