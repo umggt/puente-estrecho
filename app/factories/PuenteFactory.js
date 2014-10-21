@@ -23,27 +23,34 @@
         self.subiendo = [];
         self.bajando = [];
 
+        self.hanSubido = 0;
+        self.hanBajado = 0;
+
+
         function solicitarPaso(carro) {
 
-
+            console.log('han subido ' + self.hanSubido + ' han bajado ' + self.hanBajado);
             carro.esperar();
 
             if (carro.deSubida) {
-                if (self.bajando.length == 0 && self.subiendo.length + self.colaSubida.length < capacidad) {
+                if (self.bajando.length == 0 && (self.subiendo.length + self.colaSubida.length < capacidad) && (self.hanSubido < 3 || self.colaBajada.length === 0)) {
+                    self.hanSubido++;
                     carro.cruzar();
                     self.subiendo.push(carro);
                     console.log('carro subiendo.');
                 } else if (self.colaSubida.indexOf(carro) == -1) {
+                    self.hanSubido = 0;
                     self.colaSubida.push(carro);
                     console.log('carro en espera de subir.');
                 }
             } else {
-                if (self.subiendo.length == 0 && self.bajando.length + self.colaBajada.length < capacidad) {
+                if (self.subiendo.length == 0 && (self.bajando.length + self.colaBajada.length < capacidad) && (self.hanBajado < 3 || self.colaSubida.length === 0)) {
+                    self.hanBajado++;
                     carro.cruzar();
                     self.bajando.push(carro);
                     console.log('carro bajando.');
                 } else if (self.colaBajada.indexOf(carro) == -1) {
-                    
+                    self.hanBajado = 0;
                     self.colaBajada.push(carro);
                     console.log('carro en espera de bajar.');
                 }
