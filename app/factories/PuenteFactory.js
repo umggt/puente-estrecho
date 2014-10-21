@@ -6,7 +6,7 @@
         return Puente;
     }
 
-    function Puente() {
+    function Puente(Semaforo) {
         var self = this;
 
         var capacidad = 3;
@@ -16,6 +16,8 @@
         self.bottom = self.top + self.height;
         self.solicitarPaso = solicitarPaso;
         self.notificarSalida = notificarSalida;
+        self.semaforoSuperior = new Semaforo();
+        self.semaforoInferior = new Semaforo(); 
 
         self.colaSubida = [];
         self.colaBajada = [];
@@ -33,23 +35,33 @@
             carro.esperar();
 
             if (carro.deSubida) {
-                if (self.bajando.length == 0 && (self.subiendo.length + self.colaSubida.length < capacidad) && (self.hanSubido < 3 || self.colaBajada.length === 0)) {
+                if (self.bajando.length == 0 && (self.subiendo.length + self.colaSubida.length < capacidad) && (self.hanSubido < capacidad || self.colaBajada.length === 0)) {
+                    self.semaforoInferior.permitirPaso();
                     self.hanSubido++;
                     carro.cruzar();
                     self.subiendo.push(carro);
+                    if (self.hanSubido >= capacidad) {
+                        self.semaforoInferior.bloquearPaso();
+                    }
                     console.log('carro subiendo.');
                 } else if (self.colaSubida.indexOf(carro) == -1) {
+                    self.semaforoInferior.bloquearPaso();
                     self.hanSubido = 0;
                     self.colaSubida.push(carro);
                     console.log('carro en espera de subir.');
                 }
             } else {
-                if (self.subiendo.length == 0 && (self.bajando.length + self.colaBajada.length < capacidad) && (self.hanBajado < 3 || self.colaSubida.length === 0)) {
+                if (self.subiendo.length == 0 && (self.bajando.length + self.colaBajada.length < capacidad) && (self.hanBajado < capacidad || self.colaSubida.length === 0)) {
+                    self.semaforoSuperior.permitirPaso();
                     self.hanBajado++;
                     carro.cruzar();
                     self.bajando.push(carro);
+                    if (self.hanBajado >= capacidad) {
+                        self.semaforoSuperior.bloquearPaso();
+                    }
                     console.log('carro bajando.');
                 } else if (self.colaBajada.indexOf(carro) == -1) {
+                    self.semaforoSuperior.bloquearPaso();
                     self.hanBajado = 0;
                     self.colaBajada.push(carro);
                     console.log('carro en espera de bajar.');

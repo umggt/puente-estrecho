@@ -2,7 +2,7 @@
 
     angular.module('app').controller('SimuladorCtrl', SimuladorCtrl);
 
-    function SimuladorCtrl($interval, $log, $location, Carro, Puente) {
+    function SimuladorCtrl($interval, $log, $location, Carro, Puente, Semaforo) {
 
         var vm = this;
         vm.fps = 50; // 50 frames por segundo.
@@ -20,7 +20,9 @@
 
         vm.playPause = playPause;
 
-        var puente = new Puente();
+        var puente = new Puente(Semaforo);
+        vm.puente = puente;
+
 
         function agregarCarroBajada() {
             agregarACola(vm.colaBajada, Carro.d.bajada);

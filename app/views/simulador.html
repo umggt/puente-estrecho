@@ -4,7 +4,9 @@
         <div class="carril derecho"></div>
     </div>
     <div class="puente">
+        <div class="semaforo" ng-class="{ verde: vm.puente.semaforoSuperior.verde(), rojo: vm.puente.semaforoSuperior.rojo() }"></div>
         <div class="carril"></div>
+        <div class="semaforo" ng-class="{ verde: vm.puente.semaforoInferior.verde(), rojo: vm.puente.semaforoInferior.rojo() }"></div>
     </div>
     <div class="carretera-inferior">
         <div class="carril izquierdo"></div>
