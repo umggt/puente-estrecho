@@ -52,12 +52,34 @@
         }
 
         function notificarSalida(carro) {
+            var otroCarro = null;
+
             if (carro.deSubida) {
                 eliminarItem(self.subiendo, carro);
-                console.log('carro terminando de subir.');
+                
+                if (self.colaBajada.length === 0 && self.colaSubida.length > 1){
+                    otroCarro = self.colaSubida[self.colaSubida.length -1];
+                    eliminarItem(self.colaSubida, otroCarro);
+                    solicitarPaso(otroCarro);
+                } else if (self.colaBajada.length > 0) {
+                    otroCarro = self.colaBajada[self.colaBajada.length -1];
+                    eliminarItem(self.colaBajada, otroCarro);
+                    solicitarPaso(otroCarro);
+                }
+
             } else {
                 eliminarItem(self.bajando, carro);
-                console.log('carro terminando de bajar.');
+
+                if (self.colaSubida.length === 0 && self.colaBajada.length > 1){
+                    otroCarro = self.colaBajada[self.colaBajada.length -1];
+                    eliminarItem(self.colaBajada, otroCarro);
+                    solicitarPaso(otroCarro);
+                } else if (self.colaSubida.length > 0) {
+                    otroCarro = self.colaSubida[self.colaSubida.length -1];
+                    eliminarItem(self.colaSubida, otroCarro);
+                    solicitarPaso(otroCarro);
+                }
+                
             }
         }
 
