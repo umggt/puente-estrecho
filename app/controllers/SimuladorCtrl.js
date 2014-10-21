@@ -16,6 +16,7 @@
 
         vm.agregarCarroBajada = agregarCarroBajada;
         vm.agregarCarroSubida = agregarCarroSubida;
+        vm.generarActivo = true;
 
         vm.playPause = playPause;
 
@@ -90,7 +91,26 @@
                 return;
             }
 
+            generarCarroAleatorio();
+
             draw();
+        }
+
+        function generarCarroAleatorio() {
+            if (!vm.generarActivo) {
+                return;
+            }
+
+            var numero = generarRandom();
+            if (numero === 98) {
+                vm.agregarCarroSubida();
+            } else if (numero === 14) {
+                vm.agregarCarroBajada();
+            }
+        }
+
+        function generarRandom() {
+            return Math.floor((Math.random() * 100) + 1);
         }
 
         init();

@@ -17,8 +17,9 @@
 </div>
 <div class="controles">
     <div class="btn-group">
-        <button class="btn btn-default" ng-click="vm.agregarCarroBajada()"><i class="glyphicon glyphicon-arrow-down"></i></button>
-        <button class="btn btn-default" ng-click="vm.agregarCarroSubida()"><i class="glyphicon glyphicon-arrow-up"></i></button>
-        <button class="btn btn-default" ng-click="vm.playPause()"><i class="glyphicon glyphicon-pause" ng-show="!!vm.intervalId"></i><i class="glyphicon glyphicon-play" ng-show="!vm.intervalId"></i></button>
+        <button class="btn btn-default" ng-click="vm.agregarCarroBajada()" title="Generar Carro de Bajada"><i class="glyphicon glyphicon-arrow-down"></i></button>
+        <button class="btn btn-default" ng-click="vm.agregarCarroSubida()" title="Generar Carro de Subida"><i class="glyphicon glyphicon-arrow-up"></i></button>
+        <button class="btn btn-default" ng-click="vm.playPause()" title="{{!!vm.intervalId ? 'Pausa' : 'Play'}}"><i class="glyphicon glyphicon-pause" ng-show="!!vm.intervalId"></i><i class="glyphicon glyphicon-play" ng-show="!vm.intervalId"></i></button>
+        <button class="btn btn-default" ng-click="vm.generarActivo = !vm.generarActivo" title="{{vm.generarActivo ? 'Detener carros aleatorios': 'Generar carros aleatorios'}}"><i class="glyphicon glyphicon glyphicon-random"></i></button>
     </div>
 </div>
