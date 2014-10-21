@@ -104,9 +104,9 @@
             }
 
             var numero = generarRandom();
-            if (numero === 151) {
+            if (numero === 151 && vm.colaSubida.length < 6) {
                 vm.agregarCarroSubida();
-            } else if (numero === 13) {
+            } else if (numero === 13 && vm.colaBajada < 6) {
                 vm.agregarCarroBajada();
             }
         }

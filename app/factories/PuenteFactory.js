@@ -84,12 +84,12 @@
             if (carro.deSubida) {
                 eliminarItem(self.subiendo, carro);
 
-                if (self.colaBajada.length === 0 && self.colaSubida.length > 1){
-                    otroCarro = self.colaSubida[self.colaSubida.length -1];
+                if (self.colaBajada.length === 0 && self.colaSubida.length > 0){
+                    otroCarro = self.colaSubida[self.colaSubida.length - 1];
                     eliminarItem(self.colaSubida, otroCarro);
                     solicitarPaso(otroCarro);
                 } else if (self.colaBajada.length > 0) {
-                    otroCarro = self.colaBajada[self.colaBajada.length -1];
+                    otroCarro = self.colaBajada[self.colaBajada.length - 1];
                     eliminarItem(self.colaBajada, otroCarro);
                     solicitarPaso(otroCarro);
                 }
@@ -97,12 +97,12 @@
             } else {
                 eliminarItem(self.bajando, carro);
 
-                if (self.colaSubida.length === 0 && self.colaBajada.length > 1){
-                    otroCarro = self.colaBajada[self.colaBajada.length -1];
+                if (self.colaSubida.length === 0 && self.colaBajada.length > 0){
+                    otroCarro = self.colaBajada[self.colaBajada.length - 1];
                     eliminarItem(self.colaBajada, otroCarro);
                     solicitarPaso(otroCarro);
                 } else if (self.colaSubida.length > 0) {
-                    otroCarro = self.colaSubida[self.colaSubida.length -1];
+                    otroCarro = self.colaSubida[self.colaSubida.length - 1];
                     eliminarItem(self.colaSubida, otroCarro);
                     solicitarPaso(otroCarro);
                 }
