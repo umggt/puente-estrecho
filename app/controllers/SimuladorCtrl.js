@@ -104,15 +104,15 @@
             }
 
             var numero = generarRandom();
-            if (numero === 98) {
+            if (numero === 151) {
                 vm.agregarCarroSubida();
-            } else if (numero === 14) {
+            } else if (numero === 13) {
                 vm.agregarCarroBajada();
             }
         }
 
         function generarRandom() {
-            return Math.floor((Math.random() * 100) + 1);
+            return Math.floor((Math.random() * 200) + 1);
         }
 
         init();

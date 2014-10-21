@@ -12,12 +12,11 @@ body {
 .escenario {
     width: 500px;
     height: 500px;
-    background-color: aqua;
+    background-image: url('../img/fondo.png');
     position: absolute;
     top: 50%;
     left: 50%;
     margin: -250px;
-    border: 1px solid red;
     overflow: hidden;
 }
 
@@ -34,7 +33,6 @@ body {
     width: 100%;
     height: 170px;
     overflow: hidden;
-    background-color: green;
 }
 
 .puente {
@@ -44,19 +42,18 @@ body {
 }
 
 .puente > .semaforo {
-    z-index: 100;
-    background-color: yellow;
-    width: 20px;
+    z-index: 100;;
+    width: 30px;
     height: 30px;
     position: absolute;
 }
 
 .puente > .semaforo.verde {
-    background-color: green;
+    background-image: url('../img/verde.png');
 }
 
 .puente > .semaforo.rojo {
-    background-color: red;
+    background-image: url('../img/rojo.png');
 }
 
 .puente > .semaforo:first-child {
@@ -66,40 +63,104 @@ body {
 .puente > .semaforo:last-child {
     top: 298px;
     left: 305px;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .carril {
-    background-color: gray;
     width: 100px;
     height: 100%;
     float: left;
-    border-right: 2px solid white;
 }
 
 .carril:first-child {
     margin-left: 150px;
-    border-right-width: 2px;
-    border-right-style: dashed;
-    border-right-color: white;
-    border-left: 2px solid white;
 }
 
 .puente > .carril {
     margin-left: 200px;
-    border-right: 2px solid white;
-    border-left: 2px solid white;
 }
 
 .carro {
     position: absolute;
+    background: url('../img/cars.png') no-repeat -11px -13px;
+    width: 17px;
+    height: 32px;
 }
 
-.carro.subida {
-    background-color: blue;
+.carro.estilo-1 {
+    background-position: -11px -13px;
 }
 
-.carro.bajada {
-    background-color: red;
+.carro.estilo-2 {
+    background-position: -55px -13px;
+}
+
+.carro.estilo-3 {
+    background-position: -105px -13px;
+}
+
+.carro.estilo-4 {
+    background-position: -149px -13px;
+}
+
+.carro.estilo-5 {
+    background-position: -195px -13px;
+}
+
+.carro.estilo-6 {
+    background-position: -241px -13px;
+}
+
+.carro.estilo-7 {
+    background-position: -11px -88px;
+}
+
+.carro.estilo-8 {
+    background-position: -55px -88px;
+}
+
+.carro.estilo-9 {
+    background-position: -105px -88px;
+}
+
+.carro.estilo-10 {
+    background-position: -149px -88px;
+}
+
+.carro.estilo-11 {
+    background-position: -195px -88px;
+}
+
+.carro.estilo-12 {
+    background-position: -241px -88px;
+}
+
+.carro.estilo-13 {
+    background-position: -11px -159px;
+}
+
+.carro.estilo-14 {
+    background-position: -55px -159px;
+}
+
+.carro.estilo-15 {
+    background-position: -105px -159px;
+}
+
+.carro.estilo-16 {
+    background-position: -149px -159px;
+}
+
+.carro.estilo-17 {
+    background-position: -195px -159px;
+}
+
+.carro.estilo-18 {
+    background-position: -241px -159px;
 }
 
 @media all and (max-height: 620px) {

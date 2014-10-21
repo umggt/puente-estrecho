@@ -35,13 +35,13 @@
             carro.esperar();
 
             if (carro.deSubida) {
-                if (self.bajando.length == 0 && (self.subiendo.length + self.colaSubida.length < capacidad) && (self.hanSubido < capacidad || self.colaBajada.length === 0)) {
+                if (self.bajando.length == 0 && (self.subiendo.length + self.colaSubida.length < capacidad) && (self.hanSubido <= capacidad || self.colaBajada.length === 0)) {
                     self.semaforoInferior.permitirPaso();
                     self.hanSubido++;
                     carro.cruzar();
                     self.subiendo.push(carro);
                     if (self.hanSubido >= capacidad) {
-                        self.semaforoInferior.bloquearPaso();
+                        //self.semaforoInferior.bloquearPaso();
                     }
                     console.log('carro subiendo.');
                 } else if (self.colaSubida.indexOf(carro) == -1) {
@@ -51,13 +51,13 @@
                     console.log('carro en espera de subir.');
                 }
             } else {
-                if (self.subiendo.length == 0 && (self.bajando.length + self.colaBajada.length < capacidad) && (self.hanBajado < capacidad || self.colaSubida.length === 0)) {
+                if (self.subiendo.length == 0 && (self.bajando.length + self.colaBajada.length < capacidad) && (self.hanBajado <= capacidad || self.colaSubida.length === 0)) {
                     self.semaforoSuperior.permitirPaso();
                     self.hanBajado++;
                     carro.cruzar();
                     self.bajando.push(carro);
                     if (self.hanBajado >= capacidad) {
-                        self.semaforoSuperior.bloquearPaso();
+                        //self.semaforoSuperior.bloquearPaso();
                     }
                     console.log('carro bajando.');
                 } else if (self.colaBajada.indexOf(carro) == -1) {
@@ -73,9 +73,17 @@
         function notificarSalida(carro) {
             var otroCarro = null;
 
+            if (self.colaSubida.length === 0) {
+                self.semaforoInferior.bloquearPaso();
+            }
+
+            if (self.colaBajada.length === 0) {
+                self.semaforoSuperior.bloquearPaso();
+            }
+
             if (carro.deSubida) {
                 eliminarItem(self.subiendo, carro);
-                
+
                 if (self.colaBajada.length === 0 && self.colaSubida.length > 1){
                     otroCarro = self.colaSubida[self.colaSubida.length -1];
                     eliminarItem(self.colaSubida, otroCarro);

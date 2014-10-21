@@ -10,8 +10,8 @@
 
         var self = this;
         var espacio = 3;
-        var anchoInicial = 10;
-        var altoInicial = 10;
+        var anchoInicial = 17;
+        var altoInicial = 32;
         var escenarioHeight = 500;
         var margenCarril = 100;
         var anchoCarril = 100;
@@ -26,10 +26,12 @@
         self.esperando = false;
         self.cruzando = false;
         self.deSubida = direccion === Carro.d.subida,
-        self.height = anchoInicial;
-        self.width = altoInicial;
+        self.height = altoInicial;
+        self.width = anchoInicial;
         self.left = left();
         self.top = top();
+
+        self.estilo = 'estilo-' + Math.floor((Math.random() * 18) + 1);
 
         self.style = {};
 

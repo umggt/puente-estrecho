@@ -12,10 +12,10 @@
         <div class="carril izquierdo"></div>
         <div class="carril derecho"></div>
     </div>
-    <div ng-repeat="carro in vm.colaBajada" ng-class="{ carro: true, subida: carro.deSubida, bajada: !carro.deSubida }" ng-style="carro.style"></div>
-    <div ng-repeat="carro in vm.colaSubida" ng-class="{ carro: true, subida: carro.deSubida, bajada: !carro.deSubida }" ng-style="carro.style"></div>
-    <div ng-repeat="carro in vm.colaBajando" ng-class="{ carro: true, subida: carro.deSubida, bajada: !carro.deSubida }" ng-style="carro.style"></div>
-    <div ng-repeat="carro in vm.colaSubiendo" ng-class="{ carro: true, subida: carro.deSubida, bajada: !carro.deSubida }" ng-style="carro.style"></div>
+    <div ng-repeat="carro in vm.colaBajada" class="carro" ng-class="carro.estilo" ng-style="carro.style"></div>
+    <div ng-repeat="carro in vm.colaSubida" class="carro" ng-class="carro.estilo" ng-style="carro.style"></div>
+    <div ng-repeat="carro in vm.colaBajando" class="carro" ng-class="carro.estilo" ng-style="carro.style"></div>
+    <div ng-repeat="carro in vm.colaSubiendo" class="carro" ng-class="carro.estilo" ng-style="carro.style"></div>
 </div>
 <div class="controles">
     <div class="btn-group">
